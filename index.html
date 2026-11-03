@@ -19,6 +19,7 @@
   button[disabled] { opacity: 0.55; cursor: default; }
   .error { min-height: 20px; margin: 0; color: var(--danger); font-size: 13px; }
   .opening { margin: 0; text-align: center; color: var(--muted); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; }
+  .help { margin: 4px 0 0; text-align: center; color: var(--muted); font-size: 12px; }
   [hidden] { display: none !important; }
 </style>
 </head>
@@ -31,6 +32,7 @@
     <label>Password<input type="password" name="password" autocomplete="current-password"></label>
     <p class="error" id="error" role="alert"></p>
     <button type="submit">Sign in</button>
+    <p class="help">Forgotten your password? Ask Adam.</p>
   </form>
 </main>
 <script>
@@ -81,6 +83,7 @@
     event.preventDefault();
     const button = form.querySelector("button");
     button.disabled = true;
+    button.textContent = "Signing in…";
     error.textContent = "";
     try {
       const out = await call("login", { email: form.elements.email.value, password: form.elements.password.value });
@@ -93,6 +96,7 @@
       showForm("Could not reach the server. Try again in a moment.");
     } finally {
       button.disabled = false;
+      button.textContent = "Sign in";
     }
   });
 
